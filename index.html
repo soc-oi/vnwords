@@ -31,9 +31,27 @@
             margin-bottom: 20px; /* Adds space between the word and the button */
         }
         button {
-            padding: 10px 20px;
-            font-size: 1.2em;
+            background-color: #3486eb; /*#1d9167;*/
+            border: none;
+            color: darkblue;
+            font-weight: bold;
+            font-size: 120%;
+            padding: 15px 32px;
+            margin: 0 auto;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: block;
+            border-radius: 16px;
+            transition-duration: 0.5s;
             cursor: pointer;
+            width: 80%;
+        }
+
+        button:hover {
+            background-color: #3434eb;
+            color: white;
+            padding: 15px 32px;
+            width: 90%;
         }
     </style>
 </head>
@@ -51,7 +69,7 @@
 
     <div id="container">
         <div id="word"></div>
-        <button onclick="showNewWord()">Show New Word</button>
+        <button onclick="showNewWord()">New Word</button>
     </div>
 
     <script>
@@ -72,8 +90,8 @@
 
         function showNewWord() {
             if (words.length > 0) {
-                document.getElementById('word').innerText = words[currentIndex];
-                currentIndex = (currentIndex + 1) % words.length;
+                const randomIndex = Math.floor(Math.random() * words.length);
+                document.getElementById('word').innerText = words[randomIndex];
             } else {
                 document.getElementById('word').innerText = 'No words available';
             }
