@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Display</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #menu {
+            position: absolute;
+            top: 20px;
+            font-size: 1.2em;
+        }
+        #word {
+            font-size: 3em;
+            text-align: center;
+            margin-top: 60px; /* Give some space below the menu */
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menu">
+        <label for="fileSelector">Choose a word list:</label>
+        <select id="fileSelector" onchange="loadWords()">
+            <option value="words/Viet11K.txt">Small (11K)</option>
+            <option value="words/Viet22K.txt">Medium (22K)</option>
+            <option value="words/Viet39K.txt">Large (39K)</option>
+            <option value="words/Viet74K.txt">Xtra Large (74K)</option>
+        </select>
+    </div>
+
+    <div id="container">
+        <div id="word"></div>
+        <button onclick="showNewWord()">Show New Word</button>
+    </div>
+
+    <script>
+        let words = [];
+        let currentIndex = 0;
+
+        function loadWords() {
+            const file = document.getElementById('fileSelector').value;
+            fetch(file)
+                .then(response => response.text())
+                .then(text => {
+					console.log("yr")
+                    words = text.split('\n').filter(word => word.trim() !== '');
+                    currentIndex = 0;
+                    showNewWord();
+                });
+        }
+
+        function showNewWord() {
+            if (words.length > 0) {
+                document.getElementById('word').innerText = words[currentIndex];
+                currentIndex = (currentIndex + 1) % words.length;
+            } else {
+                document.getElementById('word').innerText = 'No words available';
+            }
+        }
+
+        window.onload = loadWords;
+    </script>
+</body>
+</html>
