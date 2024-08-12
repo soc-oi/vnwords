@@ -48,14 +48,19 @@
         .wordbtn {
             width: 250px;
         }
-        .translatebtn {
+        .speakbtn {
             width: 25px;
         }
         button:hover {
             background-color: #3434eb;
             color: white;
             padding: 15px 32px;
+        }
+        button:hover.wordbtn{
             width: 300px;
+        }
+        button:hover.speakbtn{
+            width: 35px;
         }
     </style>
 </head>
@@ -74,7 +79,7 @@
     <div id="container">
         <div id="word"></div>
         <button onclick="showNewWord()" class="wordbtn">New Word</button>
-        <button onclick="speakWord()">🔊</button>
+        <button onclick="speakWord()" class="speakbtn">🔊</button>
     </div>
 
     <script>
