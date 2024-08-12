@@ -44,7 +44,12 @@
             border-radius: 16px;
             transition-duration: 0.5s;
             cursor: pointer;
+        }
+        .wordbtn {
             width: 250px;
+        }
+        .translatebtn {
+            width: 25px;
         }
         button:hover {
             background-color: #3434eb;
@@ -68,7 +73,8 @@
 
     <div id="container">
         <div id="word"></div>
-        <button onclick="showNewWord()">New Word</button>
+        <button onclick="showNewWord()" class="wordbtn">New Word</button>
+        <button onclick="speakWord()">🔊</button>
     </div>
 
     <script>
@@ -80,7 +86,6 @@
             fetch(file)
                 .then(response => response.text())
                 .then(text => {
-					console.log("yr")
                     words = text.split('\n').filter(word => word.trim() !== '');
                     currentIndex = 0;
                     showNewWord();
@@ -93,6 +98,24 @@
                 document.getElementById('word').innerText = words[randomIndex];
             } else {
                 document.getElementById('word').innerText = 'No words available';
+            }
+        }
+
+        function speakWord() {
+            const wordToSpeak = document.getElementById('word').innerText;
+
+            if (wordToSpeak !== 'No words available' && wordToSpeak !== 'Sample Word') {
+                const utterance = new SpeechSynthesisUtterance(wordToSpeak);
+                utterance.lang = 'vi-VN';
+
+                const voices = window.speechSynthesis.getVoices();
+                const vietnameseVoice = voices.find(voice => voice.lang === 'vi-VN');
+
+                if (vietnameseVoice) {
+                    utterance.voice = vietnameseVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
             }
         }
 
